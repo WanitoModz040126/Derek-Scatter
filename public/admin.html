@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · RuneGate</title>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="none" stroke="#e8b84b" stroke-width="2"/>
+          <polygon points="20,10 29,15 29,25 20,30 11,25 11,15" fill="none" stroke="#3ee6d8" stroke-width="1.5"/>
+          <circle cx="20" cy="20" r="3" fill="#e8b84b"/>
+        </svg>
+      </div>
+      <div class="brand-name">RuneGate<small>Admin Console</small></div>
+    </div>
+    <div class="topbar-right">
+      <a href="/" class="btn-ghost">Back to Game</a>
+      <button class="btn-ghost" id="logoutBtn">Log Out</button>
+    </div>
+  </header>
+
+  <main class="admin-wrap">
+    <div class="admin-header">
+      <div>
+        <h1>Player Management</h1>
+        <div class="sub">Assign virtual credits · no real currency ever changes hands</div>
+      </div>
+    </div>
+
+    <div class="stat-cards">
+      <div class="stat-card gold"><div class="k">Total Users</div><div class="v" id="statUsers">—</div></div>
+      <div class="stat-card cyan"><div class="k">Credits in Circulation</div><div class="v" id="statCredits">—</div></div>
+      <div class="stat-card"><div class="k">Total Spins</div><div class="v" id="statSpins">—</div></div>
+      <div class="stat-card"><div class="k">Total Wagered</div><div class="v" id="statWagered">—</div></div>
+    </div>
+
+    <div class="panel">
+      <h2>Users</h2>
+      <input type="text" class="search-box" id="searchBox" placeholder="Search by username…" />
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Credits</th>
+              <th>Joined</th>
+              <th>Manage Credits</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="userRows">
+            <tr><td colspan="7">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>
