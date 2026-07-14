@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Scatter Medallions</title>
+<link rel="stylesheet" href="/css/style.css" />
+<style>
+  .app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* top bar */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--panel-line);
+    background: linear-gradient(180deg, #171c2a, #10131c);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand .medallion { width: 38px; }
+  .brand .name {
+    font-family: var(--font-display);
+    color: var(--gold-bright);
+    font-size: 18px;
+    letter-spacing: 0.03em;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 16px; }
+  .credit-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--panel-raised);
+    border: 1px solid var(--panel-line);
+    padding: 8px 16px;
+    border-radius: 999px;
+  }
+  .credit-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--win); box-shadow: 0 0 8px var(--win); }
+  .credit-pill .amount { font-family: var(--font-num); font-weight: 700; color: var(--gold-bright); font-size: 16px; }
+  .username-tag { color: var(--text-muted); font-size: 13px; }
+  .logout-link { color: var(--text-muted); font-size: 12px; text-decoration: none; cursor: pointer; }
+  .logout-link:hover { color: var(--crimson-bright); }
+
+  /* game stage */
+  .stage-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .stage {
+    width: 100%;
+    max-width: 760px;
+  }
+  .win-banner {
+    font-family: var(--font-display);
+    text-align: center;
+    color: var(--gold-bright);
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    height: 20px;
+    margin-bottom: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .win-banner.show { opacity: 1; }
+
+  .free-spin-banner {
+    display: none;
+    text-align: center;
+    background: linear-gradient(90deg, transparent, rgba(63,169,201,0.18), transparent);
+    border: 1px solid var(--teal);
+    border-radius: 10px;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-family: var(--font-num);
+    letter-spacing: 0.05em;
+    color: var(--teal);
+  }
+  .free-spin-banner.show { display: block; }
+
+  .grid-frame {
+    position: relative;
+    padding: 16px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #1a2032, #0f121c);
+    border: 1px solid var(--panel-line);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(228,180,84,0.06);
+  }
+  .grid-frame::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(228,180,84,0.25);
+    border-radius: 12px;
+    pointer-events: none;
+  }
+  .reel-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+  }
+  .reel-grid .medallion { width: 100%; }
+
+  /* controls */
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .bet-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--panel-raised);
+    border: 1px solid var(--panel-line);
+    border-radius: 10px;
+    padding: 8px 10px;
+  }
+  .bet-control .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+  .bet-control .stepper { display: flex; align-items: center; gap: 8px; }
+  .bet-control button {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--void); border: 1px solid var(--panel-line); color: var(--gold-bright);
+    font-size: 16px; cursor: pointer; line-height: 1;
+  }
+  .bet-control .bet-amount { font-family: var(--font-num); font-weight: 700; min-width: 46px; text-align: center; }
+
+  .spin-btn {
+    width: 78px; height: 78px; border-radius: 50%;
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+
+  .bonus-btn { font-size: 12px; padding: 10px 14px; }
+
+  .admin-link {
+    position: fixed;
+    bottom: 14px;
+    right: 16px;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .admin-link:hover { color: var(--gold); }
+
+  @media (max-width: 640px) {
+    .topbar { padding: 10px 14px; }
+    .brand .name { font-size: 15px; }
+    .stage-wrap { padding: 10px; }
+    .grid-frame { padding: 8px; border-radius: 12px; }
+    .reel-grid { gap: 4px; }
+    .spin-btn { width: 64px; height: 64px; font-size: 12px; }
+    .controls { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="brand">
+      <div class="medallion"><img src="/assets/icons/sym_scatter.svg" alt="" /></div>
+      <div class="name">Scatter Medallions</div>
+    </div>
+    <div class="topbar-right">
+      <span class="username-tag" id="usernameTag"></span>
+      <div class="credit-pill">
+        <div class="dot"></div>
+        <span class="amount" id="creditsAmount">0</span>
+      </div>
+      <a class="logout-link" id="logoutLink">Log out</a>
+    </div>
+  </div>
+
+  <div class="stage-wrap">
+    <div class="stage">
+      <div class="win-banner" id="winBanner"></div>
+      <div class="free-spin-banner" id="freeSpinBanner"></div>
+
+      <div class="grid-frame">
+        <div class="reel-grid" id="reelGrid"></div>
+      </div>
+
+      <div class="controls">
+        <div class="bet-control">
+          <span class="label">Bet</span>
+          <div class="stepper">
+            <button id="betMinus">−</button>
+            <span class="bet-amount" id="betAmount">1</span>
+            <button id="betPlus">+</button>
+          </div>
+        </div>
+
+        <button class="btn btn-primary spin-btn" id="spinBtn">Spin</button>
+
+        <button class="btn bonus-btn" id="bonusBtn">Daily Bonus</button>
+      </div>
+      <div class="error-text" id="gameError" style="text-align:center; margin-top:8px;"></div>
+    </div>
+  </div>
+
+  <a class="admin-link" href="/admin.html">admin</a>
+</div>
+
+<script src="/js/game.js"></script>
+</body>
+</html>

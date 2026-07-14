@@ -1,0 +1,35 @@
+{
+  "_comment": "Each entry is one symbol. 'file' is the icon filename inside public/assets/icons/. 'weight' controls how often it appears (higher = more common). 'tier' picks which payout table is used. Swap the 'file' values for your own icons — keep the ids and tiers the same, or add new entries and update GRID cell logic won't need changes.",
+
+  "symbols": [
+    { "id": "circle_stone",   "file": "sym_01.svg", "tier": "low",    "weight": 26, "name": "Stone Rune" },
+    { "id": "circle_leaf",    "file": "sym_02.svg", "tier": "low",    "weight": 24, "name": "Leaf Rune" },
+    { "id": "circle_wave",    "file": "sym_03.svg", "tier": "low",    "weight": 22, "name": "Wave Rune" },
+    { "id": "circle_flame",   "file": "sym_04.svg", "tier": "low",    "weight": 20, "name": "Flame Rune" },
+    { "id": "circle_amber",   "file": "sym_05.svg", "tier": "mid",    "weight": 14, "name": "Amber Sigil" },
+    { "id": "circle_violet",  "file": "sym_06.svg", "tier": "mid",    "weight": 12, "name": "Violet Sigil" },
+    { "id": "circle_azure",   "file": "sym_07.svg", "tier": "mid",    "weight": 10, "name": "Azure Sigil" },
+    { "id": "circle_gold",    "file": "sym_08.svg", "tier": "high",   "weight": 6,  "name": "Gold Emblem" },
+    { "id": "circle_crimson", "file": "sym_09.svg", "tier": "high",   "weight": 4,  "name": "Crimson Emblem" },
+    { "id": "circle_scatter", "file": "sym_scatter.svg", "tier": "scatter", "weight": 3, "name": "Guardian Medallion" }
+  ],
+
+  "payouts": {
+    "low":    { "8": 0.4, "10": 0.8, "12": 1.5 },
+    "mid":    { "8": 0.8, "10": 1.5, "12": 4 },
+    "high":   { "8": 2,   "10": 6,   "12": 15 }
+  },
+
+  "scatter": {
+    "4": { "pay": 2,  "freeSpins": 8 },
+    "5": { "pay": 5,  "freeSpins": 10 },
+    "6": { "pay": 25, "freeSpins": 12 }
+  },
+
+  "grid": { "cols": 6, "rows": 5 },
+
+  "cascade": {
+    "maxMultiplier": 5,
+    "multiplierStep": 1
+  }
+}
